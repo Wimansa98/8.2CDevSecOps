@@ -17,6 +17,16 @@ pipeline{
       steps { 
         bat 'npm test || exit /b 0' // Allows pipeline to continue despite test failures 
       } 
+      post{
+        always{
+          emailext{
+            mail to: "wimansadr@gmail.com",
+            subject : "Build Status: ${currentBuild.currentResult}",
+            body: "The tests have completed. Status: ${currentBuild.currentResults}",
+            attachmentsPattern: '**/*.log'
+          }
+        }
+      }
     } 
  
     stage('Generate Coverage Report') { 
@@ -30,6 +40,16 @@ pipeline{
       steps { 
         bat 'npm audit || exit /b 0' // This will show known CVEs in the output 
       } 
+      post{
+        always{
+          emailext{
+            mail to: "wimansadr@gmail.com",
+            subject : "Security Scan Status: ${currentBuild.currentResult}",
+            body: "The security scan has completed. Status: ${currentBuild.currentResults}",
+            attachmentsPattern: '**/*.log'
+          }
+        }
+      }
     } 
   } 
 }
