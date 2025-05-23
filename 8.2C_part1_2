@@ -21,7 +21,7 @@ pipeline{
         always{
           emailext(
             attachLo: true,
-            mail to: "wimansadr@gmail.com",
+            to: "wimansadr@gmail.com",
             subject : "Build Status: ${pipelineStatus}",
             body: "The tests have completed. Status: ${pipelineStatus}",
           )
