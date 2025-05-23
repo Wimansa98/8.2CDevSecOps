@@ -19,7 +19,7 @@ pipeline{
       } 
       post{
         success{
-            to: "wimansadr@gmail.com",
+            mail to: "wimansadr@gmail.com",
             subject : "Build Status: ${pipelineStatus}",
             body: "The tests have completed. Status: ${pipelineStatus}",
             attachmentsPattern: '**/*.log'
