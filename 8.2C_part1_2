@@ -40,7 +40,7 @@ pipeline{
       steps{
         bat '''
             curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-7.1.0.4889-windows-x64.zip
-            powershell -Command "Expand-Archive -Path sonar-scanner.zip -DestinationPath ."
+            powershell -Command "Expand-Archive -Path sonar-scanner.zip -DestinationPath .-Force"
         
             set SONAR_SCANNER_HOME=%cd%\\sonar-scanner-cli-7.1.0.4889-windows-x64
             set PATH=%SONAR_SCANNER_HOME%\\bin;%PATH%
