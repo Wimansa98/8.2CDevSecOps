@@ -1,5 +1,9 @@
 pipeline{ 
   agent any 
+
+  environment{
+    SONAR_TOKEN = credentials('SONAR_TOKEN')
+  }
   stages { 
     stage('Checkout') { 
       steps { 
@@ -31,5 +35,18 @@ pipeline{
         bat 'npm audit || exit /b 0' // This will show known CVEs in the output 
       } 
     } 
+
+    stage('SonarCloud Analysis'){
+      steps{
+        bat ''' 
+          curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
+          unzip sonar-scanner.zip
+          export SONAR_SCANNER_HOME=$(pwd)/sonar-scanner-cli-4.6.2.2472-linux
+          export PATH=$SONAR_SCANNER_HOME/bin:$PATH
+
+          sonar-scanner -Dsonar.login=$SONAR_TOKEN
+        '''
+      }
+    }
   } 
 }
