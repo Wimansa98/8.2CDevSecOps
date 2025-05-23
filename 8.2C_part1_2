@@ -18,11 +18,13 @@ pipeline{
         bat 'npm test || exit /b 0' // Allows pipeline to continue despite test failures 
       } 
       post{
-        success{
+        always{
+          emailext(
+            attachLo: true,
             mail to: "wimansadr@gmail.com",
             subject : "Build Status: ${pipelineStatus}",
             body: "The tests have completed. Status: ${pipelineStatus}",
-            attachmentsPattern: '**/*.log'
+          )
         }
       }
     } 
