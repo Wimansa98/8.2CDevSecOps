@@ -19,12 +19,12 @@ pipeline{
       } 
       post{
         always{
-          emailext([
+          emailext(
             to: "wimansadr@gmail.com",
-            subject : "Build Status: ${currentBuild.currentResult}",
-            body: "The tests have completed. Status: ${currentBuild.currentResults}",
+            subject : "Build Status: ${pipelineStatus}",
+            body: "The tests have completed. Status: ${pipelineStatus}",
             attachmentsPattern: '**/*.log'
-          ])
+          )
         }
       }
     } 
@@ -42,12 +42,12 @@ pipeline{
       } 
       post{
         always{
-          emailext([
+          emailext(
             to: "wimansadr@gmail.com",
-            subject : "Security Scan Status: ${currentBuild.currentResult}",
-            body: "The security scan has completed. Status: ${currentBuild.currentResults}",
+            subject : "Security Scan Status: ${pipelineStatus}",
+            body: "The security scan has completed. Status: ${pipelineStatus}",
             attachmentsPattern: '**/*.log'
-          ])
+          )
         }
       }
     } 
