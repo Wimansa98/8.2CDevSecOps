@@ -38,14 +38,15 @@ pipeline{
 
     stage('SonarCloud Analysis'){
       steps{
-        bat ''' 
-          curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
-          unzip sonar-scanner.zip
-          export SONAR_SCANNER_HOME=$(pwd)/sonar-scanner-cli-4.6.2.2472-linux
-          export PATH=$SONAR_SCANNER_HOME/bin:$PATH
+        bat '''
+            curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-windows.zip
+            powershell -Command "Expand-Archive -Path sonar-scanner.zip -DestinationPath ."
+            
+            set SONAR_SCANNER_HOME=%cd%\sonar-scanner-cli-4.6.2.2472-windows
+            set PATH=%SONAR_SCANNER_HOME%\bin;%PATH%
 
-          sonar-scanner -Dsonar.login=$SONAR_TOKEN
-        '''
+            %SONAR_SCANNER_HOME%\bin\sonar-scanner.bat -Dsonar.login=%SONAR_TOKEN%
+            '''
       }
     }
   } 
