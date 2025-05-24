@@ -29,17 +29,18 @@ pipeline{
         }
       }
     } 
- }
-  stage('Generate Coverage Report') { 
-    steps { 
+ 
+    stage('Generate Coverage Report') { 
+      steps { 
         // Ensure coverage report exists 
-      bat 'npm run coverage || exit /b 0' 
+        bat 'npm run coverage || exit /b 0' 
+      } 
     } 
-  } 
 
-  stage('NPM Audit (Security Scan)') { 
-    steps { 
-      bat 'npm audit || exit /b 0' // This will show known CVEs in the output 
+    stage('NPM Audit (Security Scan)') { 
+      steps { 
+        bat 'npm audit || exit /b 0' // This will show known CVEs in the output 
+      } 
     } 
-  } 
+  }
 }
