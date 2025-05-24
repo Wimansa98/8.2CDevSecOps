@@ -1,28 +1,29 @@
 pipeline{ 
   agent any  
- 
-  stage('Install Dependencies') { 
-    steps { 
-      bat 'npm install' 
+
+  stages{
+    stage('Install Dependencies') { 
+      steps { 
+        bat 'npm install' 
+      } 
     } 
-  } 
  
-  stage('Run Tests') { 
-    steps { 
-      bat 'npm test || exit /b 0' // Allows pipeline to continue despite test failures 
-    } 
-    post{
-      always{
-        emailext(
-          subject: "Pipeline status:${currentBuild.result}",
-          body: "The test have completed. Status: ${currentBuild.result}",
-          to: "wimansadr@gmail.com",
-          attachLog: true
-        )
+    stage('Run Tests') { 
+      steps { 
+        bat 'npm test || exit /b 0' // Allows pipeline to continue despite test failures 
+      } 
+      post{
+        always{
+          emailext(
+            subject: "Pipeline status:${currentBuild.result}",
+            body: "The test have completed. Status: ${currentBuild.result}",
+            to: "wimansadr@gmail.com",
+            attachLog: true
+          )
+        }
       }
-    }
-  } 
- 
+    } 
+ }
   stage('Generate Coverage Report') { 
     steps { 
         // Ensure coverage report exists 
