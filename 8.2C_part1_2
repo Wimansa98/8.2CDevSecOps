@@ -21,8 +21,8 @@ pipeline{
       post{
         always{
           emailext(
-            subject: "Pipeline status:${BUILD_STATUS}",
-            body: "The test have completed. Status: ${BUILD_STATUS}",
+            subject: "Pipeline status:${currentBuild.result}",
+            body: "The test have completed. Status: ${currentBuild.result}",
             to: "wimansadr@gmail.com",
             attachLog: true
           )
